@@ -14,8 +14,11 @@ import androidx.room.Room
 //import androidx.room.processor.Context
 import com.example.hhchores.ui.theme.HhChoresTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -23,6 +26,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -79,23 +84,27 @@ class MainActivity : ComponentActivity() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-                var textFieldText by remember {
+                var chore by remember {
                     mutableStateOf("")
                 }
-                TextField(value = textFieldText, onValueChange = {
-                    textFieldText = it
+                OutlinedTextField(value = chore, onValueChange = {
+                    chore = it
                 })
                 Button(onClick = {
-                    onNewTaskClicked(textFieldText)
+                    onNewTaskClicked(chore)
                 }) {
-                    Text(text = "Click Me")
+                    Text(text = "Add Task")
                 }
 //                Text(text = uiState.taskCount)
             }
-            items(uiState.tasks.size) {
-                Text(text = uiState.tasks[it])
-            }
 
+            items(uiState.tasks.size) {
+                Card(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp)
+
+                ) { Text(text = uiState.tasks[it])}
+            }
         }
     }
 }
